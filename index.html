@@ -1,74 +1,87 @@
 ﻿<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="utf-8" />
-    <title>Pyschic Game</title>
+	<meta charset="utf-8" />
+	<title>Pyschic Game</title>
 </head>
+
 <body>
-   <div>
+	<div>
 		<h1>The Pyschic Game </h1>
 		<p id="directions-text"></p>
 		<p id="wins-text"></p>
 		<p id="losses-text"></p>
 		<p id="remaining-guess-text"></p>
-		<p id="current-guess-text"><p>
+		<p id="current-guess-text">
+			<p>
 	</div>
 
-	
 
-	<h2>You just typed <span id="user-text"><strong>...Nothing.</strong></span></h2>
+
+	<h2>You just typed
+		<span id="user-text">
+			<strong>...Nothing.</strong>
+		</span>
+	</h2>
 	<script type="text/javascript">
 
-	var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]; //set the alphabet for the computer
-	
-	var wins = 0; //sets the variable to increment for wins vs the computer
-	var losses = 0; //sets the variable to increment for losses vs the computer
-	var guessesLeft = 9; //initiailizes the number of guesses a user has - this will be decremented
-	var currentGuesses = []; //set an empty array to store the different letters that are guessed
+		var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]; //set the alphabet for the computer
 
-	var directionsText = document.getElementById("directions-text");
-	var winsText = document.getElementById("wins-text");
-	var lossesText = document.getElementById("losses-text");
-	var remainGuessText = document.getElementById("remaining-guess-text");
-	var currentGuessText = document.getElementById("current-guess-text");
+		var wins = 0; //sets the variable to increment for wins vs the computer
+		var losses = 0; //sets the variable to increment for losses vs the computer
+		var guessesLeft = 9; //initiailizes the number of guesses a user has - this will be decremented
+		var currentGuesses = []; //set an empty array to store the different letters that are guessed
 
+		var directionsText = document.getElementById("directions-text");
+		console.log(directionsText);
+		var winsText = document.getElementById("wins-text");
+		console.log(winsText);
+		var lossesText = document.getElementById("losses-text");
+		var remainGuessText = document.getElementById("remaining-guess-text");
+		var currentGuessText = document.getElementById("current-guess-text");
+		reset();
 
-	 document.onkeyup = function(event) {
-	    
-	 var userGuess = event.key;
+		var computerGuess;
+		function reset() {
+			currentGuesses = [];
+			guessesLeft = 9;
+			computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
 
-	 var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+		}
 
-	 if (userGuess === computerGuess) {
-	 	 currentGuesses.push(userGuess);
-		 console.log(currentGuesses);
-		 wns++;
-		 }
-	 else {
-	 	 guessesLeft--;
-		 losses++;
-		 console.log(guessesLeft);
-		 console.log(losses);
-		 
-		 }
-		
-	 };
-	 
-	 //write to the screen
-	 winsText.textConent = "Wins: " + wins;
-	 lossesText.textConent = "Losses: " + losses;
-	 remainGuessText.textConent = "Guesses left: " + guessesLeft;
-	 currentGuessText.textContent = "Your guesses so far: " + userGuess;
+		document.onkeyup = function (event) {
 
-	 //userText = document.getElementById("user-text");
-
-	//document.onkeyup = function(event) {
-		//userText.textContent = event.key;
-	//};
+			var userGuess = event.key;
 
 
 
-   </script>
+			if (userGuess === computerGuess) {
+				wins++;
+				console.log(currentGuesses);
+				reset();
+
+			}
+			else if (userGuess !== computerGuess) {
+				guessesLeft--;
+				console.log("Guesses left: " + guessesLeft);
+				if (guessesLeft === 0) {
+					losses++;
+					reset();
+				}
+			}
+
+
+			currentGuesses.push(userGuess);
+
+			winsText.textContent = "Wins: " + wins;
+			lossesText.textContent = "Losses: " + losses;
+			remainGuessText.textContent = "Guesses left: " + guessesLeft;
+			currentGuessText.textContent = "Your guesses so far: " + currentGuesses;
+		};
+
+	</script>
 </body>
+
 </html>
